@@ -1,0 +1,147 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+    <title>Cadastro de Usuário</title>
+    <script type="text/javascript">
+  //<![CDATA[ 
+	<!-- Dado um conjunto de elementos selecionados remove esses elementos da selecao -->
+	<!-- Fonte: https://www.w3schools.com/jsref/met_select_remove.asp -->
+	<!-- Using JQuery https://paulund.co.uk/add-and-remove-options-in-select-using-jquery -->
+	function removeSelectedItem() {
+		  var myPermissoesSelect = document.getElementById("myPermissoes");
+		  myPermissoesSelect.remove(myPermissoesSelect.selectedIndex);
+		  getElementsCSV();
+	}
+	
+	function addSelectedItem(){
+		var myAcessoSelect = document.getElementById("myAcesso");
+		var selectedItemFromMyAcesso = myAcessoSelect.value;
+		
+		//Cria um novo elemento
+		var myOption = document.createElement("option");
+		myOption.text = selectedItemFromMyAcesso;
+		
+		var myPermissoesSelect = document.getElementById("myPermissoes");
+		
+		//percorre todos os elementos de myPermissoes
+		//checa se o elemento ainda não existe, então adiciona, se não mostra uma mensagem
+		var achou=false;
+		var i;
+	
+		for (i = 0; i < myPermissoesSelect.length; i++){
+			if (myOption.value == myPermissoesSelect.options[i].value){
+				alert("A permissão já foi adicionada!");
+				achou = true;
+				break;
+			}
+		}
+		
+		if (achou==false){
+			myPermissoesSelect.add(myOption);	
+		}
+		getElementsCSV();
+	}
+	
+	function getElementsCSV(){
+		var myStringCSV="";
+		var myPermissoesSelect = document.getElementById("myPermissoes");
+		
+		var i;
+		for(i = 0; i < myPermissoesSelect.length; i++){
+			myStringCSV = myStringCSV + myPermissoesSelect.options[i].value + ",";
+		}
+		myStringCSV = myStringCSV.substring(0,myStringCSV.length - 1);
+		document.getElementById("checkMyPermissoes").value = myStringCSV;
+	}
+		
+	//]]>
+</script>
+    
+</head>
+<body onload="getElementsCSV();">
+
+<section layout:fragment="header">
+    <h1>Permissões de Usuários</h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active">Permissões de Usuários</li>
+    </ol>
+</section>
+<div layout:fragment="content">
+
+	<div class="row">
+
+	<div class="col-md-3">
+	<div class="box box-primary">
+            <div class="box-body box-profile">
+              <a th:href="${'/users/'+user.id+'/select/image'}">
+              	<img class="profile-user-img img-responsive img-circle" th:src="${'/upload/image/users/'+user.id}" alt="User profile picture"></img>
+              </a>
+			
+			<h3 class="profile-username text-center"><spam th:text="${user.username}"></spam></h3>
+
+              <p class="text-muted text-center">Software Engineer</p>
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+	</div>
+	
+	<div class="col-md-9">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Formulário</h3>
+            <div class="box-tools pull-right">
+                <a href="/accesscontrol/users" type="button" class="btn btn-box-tool"><i class="fa fa-list-ul"></i></a>
+            </div>
+        </div>
+        <form data-toggle="validator" role="form" th:object="${user}" th:action="@{/accesscontrol/users/saveedited}" method="post">
+            <div class="box-body">
+                <input type="hidden" th:field="*{id}"/>
+
+                <div class="form-group">
+                    <label for="Username">Username</label>
+                    <input type="text" required="true" class="form-control" th:field="*{username}" id="username" readonly="readonly"/>
+                </div>
+                <div class="form-group">
+                	<label for="Username">E-mail</label>
+                	<input type="text" required="true" class="form-control" th:field="*{email}" id="email" readonly="readonly"/>
+                </div>
+                <div class="form-group">
+                    <label for="Ativo">Ativo</label>
+                    <select class="form-control"
+							required="true" th:field="*{enabled}" id="enabled">
+							<option value="true">true</option>
+							<option value="false">false</option>
+					</select>                    
+                </div>                
+				<div >
+				    <label>Meus Acessos</label>
+				    <select multiple="" class="form-control" required="true" name="myPermissoes" id="myPermissoes">
+				        <option th:each="role : *{roles}" th:text="${role.nome}"></option>
+				    </select>
+				    <input type="hidden" name="checkMyPermissoes" id="checkMyPermissoes" value=""></input>
+				    <button type="button" onclick="removeSelectedItem();">Remove</button>
+				</div>
+				<div class="form-group">
+				      <label for="nome">Tipo de Acesso</label>                    
+				      <select class="form-control" name="myAcesso" id="myAcesso" required="true">
+				      	  <option th:each="authority : ${authoritieslist}" th:text="${authority.nome}"></option>
+					  </select>
+				      <button type="button" onclick="addSelectedItem();">Adiciona</button>
+				</div>
+				
+            </div>
+            
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary" onclick="getElementsCSV();">Salvar</button>
+            </div>
+        </form>
+    </div>
+	</div>
+	</div>
+
+</div>
+
+</body>
+</html>
