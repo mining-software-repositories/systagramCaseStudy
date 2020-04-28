@@ -3,157 +3,220 @@ package study.systagram;
 import arcatch.ArCatchAPI;
 import arcatch.dsl.compartment.grammar.Compartment;
 import arcatch.dsl.rule.common.Criticality;
+import arcatch.dsl.rule.common.DesignRule;
 
 public class App 
 {
 	private static Compartment systagram;
-	
-    public static void main( String[] args )
-    {
-        System.out.println( "Analisando o código do systagram com o Arcatch 2.0..." );
-        
-        String projectPath = "./systagram/";
-        
-        checkSystagram140(projectPath + "v1-4-0/src/main/java");
-        checkSystagram141(projectPath + "v1-4-1/src/main/java");
-        checkSystagram150(projectPath + "v1-5-0/src/main/java");
-        checkSystagram151(projectPath + "v1-5-1/src/main/java");
-        System.out.println("Análise concluída.");
-    }
+	private static Compartment controller;
+	private static Compartment service;
+	private static Compartment repository;
+	private static Compartment model;
+	private static Compartment util;
+	private static Compartment security;
     
-    private static void checkRules() {		
-		ArCatchAPI.addRule(ArCatchAPI
-				.ruleBuilder()
-				.antiDrift()
-				.criticality(Criticality.WARNING)
-				.compartiment(systagram)
-				.constrainedTo("NoCA = 0.0")
-				.build());	
-		
-		ArCatchAPI.addRule(ArCatchAPI
+    private static void checkRules() {	
+    	DesignRule rule1_check_NoCA = ArCatchAPI
+		.ruleBuilder()
+		.antiDrift()
+		.criticality(Criticality.WARNING)
+		.compartiment(systagram)
+		.constrainedTo("NoCA = 0.0")
+		.build();
+    	
+    	DesignRule rule2_check_NoCI = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("NoCI = 0.0")
-				.build());
-		
-		ArCatchAPI.addRule(ArCatchAPI
+				.build();
+    	
+    	DesignRule rule3_check_NoCRN = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("NoCRN = 0.0")
-				.build());		
-		
-		ArCatchAPI.addRule(ArCatchAPI
+				.build();
+    	
+    	DesignRule rule4_check_NoEH = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("NoEH = 0.0")
-				.build());
-		
-		ArCatchAPI.addRule(ArCatchAPI
+				.build();
+    	
+    	DesignRule rule5_check_NoDR = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("NoDR = 0.0")
-				.build());				
-		
-		ArCatchAPI.addRule(ArCatchAPI
+				.build();
+    	
+    	DesignRule rule6_check_NoGR = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("NoGH = 0.0")
-				.build());
-		
-		ArCatchAPI.addRule(ArCatchAPI
+				.build();
+    
+    	DesignRule rule7_check_NoGS = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("NoGS = 0.0")
-				.build());
-		
-		ArCatchAPI.addRule(ArCatchAPI
+				.build();
+    	
+    	DesignRule rule8_check_NoNPB = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("NoNPB = 0.0")
-				.build());
-		
-		ArCatchAPI.addRule(ArCatchAPI
+				.build();
+    	
+    	DesignRule rule9_check_NoOCA = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("NoOCA = 0.0")
-				.build());		
-		
-		ArCatchAPI.addRule(ArCatchAPI
+				.build();
+    	DesignRule rule10_check_NoOC = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("NoOC = 0.0")
-				.build());
-		
-		ArCatchAPI.addRule(ArCatchAPI
+				.build();
+    	DesignRule rule11_check_NoSF = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("NoSF = 0.0")
-				.build());
-		
-		ArCatchAPI.addRule(ArCatchAPI
+				.build();
+    	DesignRule rule12_check_NoSKS = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("NoSKS = 0.0")
-				.build());						
-		
-		// Abstractness violation
-		ArCatchAPI.addRule(ArCatchAPI
+				.build();
+    	
+    	// Abstractness violation
+    	DesignRule rule13_check_Abstractness_violation = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("(Ce / (Ce + Ca)) <= 0.3")
-				.build());
-		
-		//Large Class according PMD tool: https://github.com/pmd/pmd/blob/master/pmd-java/src/main/java/net/sourceforge/pmd/lang/java/rule/design/DataClassRule.java
-		ArCatchAPI.addRule(ArCatchAPI
+				.build();
+    	
+    	//Large Class according PMD tool: https://github.com/pmd/pmd/blob/master/pmd-java/src/main/java/net/sourceforge/pmd/lang/java/rule/design/DataClassRule.java
+    	DesignRule rule14_check_Large_Class = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("(((NoM + NoA) > 3) & (WMC < 31)) | (((NoM + NoA) > 5) & (WMC < 47))")
-				.build());
-				
-		//TooManyFields according PMD tool: ttps://github.com/pmd/pmd/blob/master/pmd-java/src/main/java/net/sourceforge/pmd/lang/java/rule/design/TooManyFieldsRule.java
-		ArCatchAPI.addRule(ArCatchAPI
+				.build();
+    	//TooManyFields
+    	DesignRule rule15_check_TooManyFields = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("NoA > 15")
-				.build());		
-		
-		//TooManyMethods according PMD tool: https://pmd.github.io/pmd-6.19.0/pmd_rules_java_design.html#toomanymethods
-		ArCatchAPI.addRule(ArCatchAPI
+				.build();
+    	
+    	//TooManyMethods
+    	DesignRule rule16_check_TooManyMethods = ArCatchAPI
 				.ruleBuilder()
 				.antiDrift()
 				.criticality(Criticality.WARNING)
 				.compartiment(systagram)
 				.constrainedTo("NoM > 10")
-				.build());		
+				.build(); 
+    	
+		DesignRule rule17_check_controller_onlyCanCall_service = ArCatchAPI.ruleBuilder()
+				.antiErosion()
+				.criticality(Criticality.HIGH)
+				.compartiment(controller)
+				.canCallOnly(service)
+				.build();
 		
+		DesignRule rule18_check_controller_onlyCanCall_model = ArCatchAPI.ruleBuilder()
+				.antiErosion()
+				.criticality(Criticality.HIGH)
+				.compartiment(controller)
+				.canCallOnly(model)
+				.build();
+		
+		DesignRule rule19_check_controller_onlyCanCall_util = ArCatchAPI.ruleBuilder()
+				.antiErosion()
+				.criticality(Criticality.HIGH)
+				.compartiment(controller)
+				.canCallOnly(util)
+				.build();
+		
+		DesignRule rule20_check_controller_onlyCanCall_security = ArCatchAPI.ruleBuilder()
+				.antiErosion()
+				.criticality(Criticality.HIGH)
+				.compartiment(controller)
+				.canCallOnly(security)
+				.build();
+		
+		DesignRule rule21_check_service_onlyCanCall_model = ArCatchAPI.ruleBuilder()
+				.antiErosion()
+				.criticality(Criticality.HIGH)
+				.compartiment(service)
+				.canCallOnly(model)
+				.build();
+		
+		DesignRule rule22_check_service_onlyCanCall_repository = ArCatchAPI.ruleBuilder()
+				.antiErosion()
+				.criticality(Criticality.HIGH)
+				.compartiment(service)
+				.canCallOnly(repository)
+				.build();
+		
+		DesignRule rule23_check_repository_onlyCanCall_model = ArCatchAPI.ruleBuilder()
+				.antiErosion()
+				.criticality(Criticality.HIGH)
+				.compartiment(repository)
+				.canCallOnly(model)
+				.build();
+
+		ArCatchAPI.addRule(rule1_check_NoCA);	
+		ArCatchAPI.addRule(rule2_check_NoCI);
+		ArCatchAPI.addRule(rule3_check_NoCRN);		
+		ArCatchAPI.addRule(rule4_check_NoEH);
+		ArCatchAPI.addRule(rule5_check_NoDR);				
+		ArCatchAPI.addRule(rule6_check_NoGR);
+		ArCatchAPI.addRule(rule7_check_NoGS);
+		ArCatchAPI.addRule(rule8_check_NoNPB);
+		ArCatchAPI.addRule(rule9_check_NoOCA);		
+		ArCatchAPI.addRule(rule10_check_NoOC);
+		ArCatchAPI.addRule(rule11_check_NoSF);
+		ArCatchAPI.addRule(rule12_check_NoSKS);						
+		ArCatchAPI.addRule(rule13_check_Abstractness_violation);		
+		ArCatchAPI.addRule(rule14_check_Large_Class);
+		ArCatchAPI.addRule(rule15_check_TooManyFields);		
+		ArCatchAPI.addRule(rule16_check_TooManyMethods);	
+		ArCatchAPI.addRule(rule17_check_controller_onlyCanCall_service);
+		ArCatchAPI.addRule(rule18_check_controller_onlyCanCall_model);
+		ArCatchAPI.addRule(rule19_check_controller_onlyCanCall_util);
+		ArCatchAPI.addRule(rule20_check_controller_onlyCanCall_security);
+		ArCatchAPI.addRule(rule21_check_service_onlyCanCall_model);
+		ArCatchAPI.addRule(rule22_check_service_onlyCanCall_repository);
+		ArCatchAPI.addRule(rule23_check_repository_onlyCanCall_model);	
+
 		ArCatchAPI.check();
 	}
 	
@@ -170,8 +233,50 @@ public class App
 				.matching("br.ufc.great.sysadmin.systagram.*")
 				.build();
 
-		ArCatchAPI.addCompartment(systagram);		
+		controller = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("controller")
+				.matching("br.ufc.great.sysadmin.controller.*")
+				.build();
+	
+		service = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("service")
+				.matching("br.ufc.great.sysadmin.serfvice.*")
+				.build();
+				
+		repository = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("repository")
+				.matching("br.ufc.great.sysadmin.repository.*")
+				.build();
 		
+		model = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("model")
+				.matching("br.ufc.great.sysadmin.model.*")
+				.build();
+		
+		util = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("util")
+				.matching("br.ufc.great.sysadmin.util.*")
+				.build();
+		
+		security = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("security")
+				.matching("br.ufc.great.sysadmin.security.*")
+				.build();
+		
+		ArCatchAPI.addCompartment(systagram);	
+		ArCatchAPI.addCompartment(controller);
+		ArCatchAPI.addCompartment(service);
+		ArCatchAPI.addCompartment(repository);
+		ArCatchAPI.addCompartment(model);
+		ArCatchAPI.addCompartment(util);
+		ArCatchAPI.addCompartment(security);
+	
 		checkRules();
 	}
 
@@ -188,8 +293,50 @@ public class App
 				.matching("br.ufc.great.sysadmin.systagram.*")
 				.build();
 
-		ArCatchAPI.addCompartment(systagram);		
+		controller = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("controller")
+				.matching("br.ufc.great.sysadmin.controller.*")
+				.build();
+	
+		service = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("service")
+				.matching("br.ufc.great.sysadmin.serfvice.*")
+				.build();
+				
+		repository = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("repository")
+				.matching("br.ufc.great.sysadmin.repository.*")
+				.build();
 		
+		model = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("model")
+				.matching("br.ufc.great.sysadmin.model.*")
+				.build();
+		
+		util = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("util")
+				.matching("br.ufc.great.sysadmin.util.*")
+				.build();
+		
+		security = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("security")
+				.matching("br.ufc.great.sysadmin.security.*")
+				.build();
+		
+		ArCatchAPI.addCompartment(systagram);	
+		ArCatchAPI.addCompartment(controller);
+		ArCatchAPI.addCompartment(service);
+		ArCatchAPI.addCompartment(repository);
+		ArCatchAPI.addCompartment(model);
+		ArCatchAPI.addCompartment(util);
+		ArCatchAPI.addCompartment(security);
+
 		checkRules();
 	}
 
@@ -206,8 +353,50 @@ public class App
 				.matching("br.ufc.great.sysadmin.systagram.*")
 				.build();
 
-		ArCatchAPI.addCompartment(systagram);		
+		controller = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("controller")
+				.matching("br.ufc.great.sysadmin.controller.*")
+				.build();
+	
+		service = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("service")
+				.matching("br.ufc.great.sysadmin.serfvice.*")
+				.build();
+				
+		repository = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("repository")
+				.matching("br.ufc.great.sysadmin.repository.*")
+				.build();
 		
+		model = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("model")
+				.matching("br.ufc.great.sysadmin.model.*")
+				.build();
+		
+		util = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("util")
+				.matching("br.ufc.great.sysadmin.util.*")
+				.build();
+		
+		security = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("security")
+				.matching("br.ufc.great.sysadmin.security.*")
+				.build();
+		
+		ArCatchAPI.addCompartment(systagram);	
+		ArCatchAPI.addCompartment(controller);
+		ArCatchAPI.addCompartment(service);
+		ArCatchAPI.addCompartment(repository);
+		ArCatchAPI.addCompartment(model);
+		ArCatchAPI.addCompartment(util);
+		ArCatchAPI.addCompartment(security);
+			
 		checkRules();
 	}
 
@@ -224,10 +413,64 @@ public class App
 				.matching("br.ufc.great.sysadmin.systagram.*")
 				.build();
 
-		ArCatchAPI.addCompartment(systagram);		
+		controller = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("controller")
+				.matching("br.ufc.great.sysadmin.controller.*")
+				.build();
+	
+		service = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("service")
+				.matching("serfvice")
+				.build();
+				
+		repository = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("repository")
+				.matching("br.ufc.great.sysadmin.repository.*")
+				.build();
+		
+		model = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("model")
+				.matching("br.ufc.great.sysadmin.model.*")
+				.build();
+		
+		util = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("util")
+				.matching("br.ufc.great.sysadmin.uti.*l")
+				.build();
+		
+		security = ArCatchAPI
+				.compartmentBuilder()
+				.compartment("security")
+				.matching("br.ufc.great.sysadmin.security.*")
+				.build();
+		
+		ArCatchAPI.addCompartment(systagram);	
+		ArCatchAPI.addCompartment(controller);
+		ArCatchAPI.addCompartment(service);
+		ArCatchAPI.addCompartment(repository);
+		ArCatchAPI.addCompartment(model);
+		ArCatchAPI.addCompartment(util);
+		ArCatchAPI.addCompartment(security);
 		
 		checkRules();
 	}
 
+    public static void main( String[] args )
+    {
+        System.out.println( "Analisando o código do systagram com o Arcatch 2.0..." );
+        
+        String projectPath = "./systagram/";
+        
+        checkSystagram140(projectPath + "v1-4-0/src/main/java");
+        checkSystagram141(projectPath + "v1-4-1/src/main/java");
+        checkSystagram150(projectPath + "v1-5-0/src/main/java");
+        checkSystagram151(projectPath + "v1-5-1/src/main/java");
+        System.out.println("Análise concluída.");
+    }
 	
 }

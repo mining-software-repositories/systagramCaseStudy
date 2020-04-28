@@ -1,0 +1,12 @@
+Project Name;Systagram
+Project Source Path;./systagram/v1-5-1/src/main/java
+Number of Units;38
+Number of Exceptions;0
+Lines of Code;2859.0
+Catch Block Lines of Code;4.0
+Overall Number of Rules;23
+Overall Number of Passing Rules;19
+Number of Anti-Drift Rules;16
+Number of Anit-Drift Passing Rules;16
+Number of Anti-Erosion Rules;7
+Number of Anti-Erosion Passing Rules;3

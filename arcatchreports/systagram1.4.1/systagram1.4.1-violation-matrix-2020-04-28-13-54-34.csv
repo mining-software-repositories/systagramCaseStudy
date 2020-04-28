@@ -1,0 +1,9 @@
+Unit;AER01;AER02;AER03;AER04;Ocurrences;Class DeF
+br.ufc.great.sysadmin.controller.AccessControlController;8.0;8.0;7.0;8.0;4.0;7.75
+br.ufc.great.sysadmin.controller.DashboardController;4.0;4.0;3.0;4.0;4.0;3.75
+br.ufc.great.sysadmin.controller.FileUploadController;10.0;10.0;9.0;10.0;4.0;9.75
+br.ufc.great.sysadmin.controller.MyErrorController;1.0;1.0;1.0;1.0;4.0;1.0
+br.ufc.great.sysadmin.controller.PersonController;18.0;18.0;17.0;18.0;4.0;17.75
+br.ufc.great.sysadmin.controller.UserController;15.0;15.0;14.0;15.0;4.0;14.75
+Ocurrences;6.0;6.0;6.0;6.0
+Rule DeF;9.333333333333334;9.333333333333334;8.5;9.333333333333334
