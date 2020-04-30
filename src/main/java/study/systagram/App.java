@@ -144,55 +144,29 @@ public class App
 				.constrainedTo("NoM > 10")
 				.build(); 
     	
-		DesignRule rule17_check_controller_onlyCanCall_service = ArCatchAPI.ruleBuilder()
+		DesignRule ruleX1_check_controller = ArCatchAPI.ruleBuilder()
 				.antiErosion()
 				.criticality(Criticality.HIGH)
 				.compartiment(controller)
-				.canCallOnly(service)
+				.mustCall(service, model, util)
 				.build();
-		
-		DesignRule rule18_check_controller_onlyCanCall_model = ArCatchAPI.ruleBuilder()
-				.antiErosion()
-				.criticality(Criticality.HIGH)
-				.compartiment(controller)
-				.canCallOnly(model)
-				.build();
-		
-		DesignRule rule19_check_controller_onlyCanCall_util = ArCatchAPI.ruleBuilder()
-				.antiErosion()
-				.criticality(Criticality.HIGH)
-				.compartiment(controller)
-				.canCallOnly(util)
-				.build();
-		
-		DesignRule rule20_check_controller_onlyCanCall_security = ArCatchAPI.ruleBuilder()
-				.antiErosion()
-				.criticality(Criticality.HIGH)
-				.compartiment(controller)
-				.canCallOnly(security)
-				.build();
-		
-		DesignRule rule21_check_service_onlyCanCall_model = ArCatchAPI.ruleBuilder()
+				
+		DesignRule ruleX2_check_service = ArCatchAPI.ruleBuilder()
 				.antiErosion()
 				.criticality(Criticality.HIGH)
 				.compartiment(service)
-				.canCallOnly(model)
+				.mustCall(repository, model)
 				.build();
 		
-		DesignRule rule22_check_service_onlyCanCall_repository = ArCatchAPI.ruleBuilder()
-				.antiErosion()
-				.criticality(Criticality.HIGH)
-				.compartiment(service)
-				.canCallOnly(repository)
-				.build();
 		
-		DesignRule rule23_check_repository_onlyCanCall_model = ArCatchAPI.ruleBuilder()
+		DesignRule ruleX3_check_repository = ArCatchAPI.ruleBuilder()
 				.antiErosion()
 				.criticality(Criticality.HIGH)
 				.compartiment(repository)
-				.canCallOnly(model)
+				.mustCall(model)
 				.build();
 
+    	
 		ArCatchAPI.addRule(rule1_check_NoCA);	
 		ArCatchAPI.addRule(rule2_check_NoCI);
 		ArCatchAPI.addRule(rule3_check_NoCRN);		
@@ -209,14 +183,9 @@ public class App
 		ArCatchAPI.addRule(rule14_check_Large_Class);
 		ArCatchAPI.addRule(rule15_check_TooManyFields);		
 		ArCatchAPI.addRule(rule16_check_TooManyMethods);	
-		ArCatchAPI.addRule(rule17_check_controller_onlyCanCall_service);
-		ArCatchAPI.addRule(rule18_check_controller_onlyCanCall_model);
-		ArCatchAPI.addRule(rule19_check_controller_onlyCanCall_util);
-		ArCatchAPI.addRule(rule20_check_controller_onlyCanCall_security);
-		ArCatchAPI.addRule(rule21_check_service_onlyCanCall_model);
-		ArCatchAPI.addRule(rule22_check_service_onlyCanCall_repository);
-		ArCatchAPI.addRule(rule23_check_repository_onlyCanCall_model);	
-
+		ArCatchAPI.addRule(ruleX1_check_controller);
+		ArCatchAPI.addRule(ruleX2_check_service);
+		ArCatchAPI.addRule(ruleX3_check_repository);
 		ArCatchAPI.check();
 	}
 	

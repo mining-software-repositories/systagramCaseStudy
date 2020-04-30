@@ -1,0 +1,8 @@
+Id;Label;Class Search Pattern;Method Search Pattern
+CPT01;systagram;br.ufc.great.sysadmin.systagram.*;*:*
+CPT02;controller;br.ufc.great.sysadmin.controller.*;*:*
+CPT03;service;serfvice;*:*
+CPT04;repository;br.ufc.great.sysadmin.repository.*;*:*
+CPT05;model;br.ufc.great.sysadmin.model.*;*:*
+CPT06;util;br.ufc.great.sysadmin.uti.*l;*:*
+CPT07;security;br.ufc.great.sysadmin.security.*;*:*
